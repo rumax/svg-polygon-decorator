@@ -51,7 +51,16 @@ let lineSegmentIntersection = (circle, radius, pointA, pointB) => {
 };
 
 
+let lineLength = (line) => {
+  let pointA = line[0];
+  let pointB = line[1];
+  let xA = pointA[0];
+  let xB = pointB[0];
+  let yA = pointA[1];
+  let yB = pointB[1];
 
+  return Math.sqrt(Math.pow((xB - xA), 2) + Math.pow((yB - yA), 2));
+};
 
 
 let getIntersection = (line, length) => {
@@ -66,18 +75,16 @@ let getIntersection = (line, length) => {
   let xPoint;
   let yPoint;
 
-  let fullLen = Math.sqrt(Math.pow((xB - xA), 2) + Math.pow((yB - yA), 2));
-
-  if (fullLen === length) {
+  let fullLen = lineLength(line);
+  const ESP = 0.001;
+  if (Math.abs(fullLen - length) < ESP) {
     pointC = pointB;
   } else if (fullLen > length) {
     delta = length / (fullLen - length)
     xPoint = (xA + delta * xB) / (1 + delta);
     yPoint = (yA + delta * yB) / (1 + delta);
     pointC = [xPoint, yPoint];
-  }// else {
-    //console.log('TODO: cannot fit, left ' + fullLen + ' out of ' + length);
-  //}
+  }
 
   return pointC;
 };
@@ -121,6 +128,14 @@ let cloudALine = (line, radius, nextLine) => {
 };
 
 
+var fixRadiusToFitLine = (line, radius) => {
+  const length = lineLength(line);
+  let segments = Math.round(length / (2 * radius) + 0.5);
+  const newRadius = length / segments;
+  return length / segments / 2;
+};
+
+
 let svgCloud = (poligon, radius) => {
   let cloud = 'M ' + poligon[0][0] + ', ' + poligon[0][1];
   let ind = 1;
@@ -129,11 +144,11 @@ let svgCloud = (poligon, radius) => {
 
   for (; ind < cnt; ++ ind) {
     line = [poligon[ind - 1], poligon[ind]];
-    cloud += cloudALine(line, radius);
+    cloud += cloudALine(line, fixRadiusToFitLine(line, radius));
   }
 
   line = [poligon[ind - 1], poligon[0]];
-  cloud += cloudALine(line, radius);
+  cloud += cloudALine(line, fixRadiusToFitLine(line, radius));
 
   return cloud;
 };
