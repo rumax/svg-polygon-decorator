@@ -1,2 +1,8 @@
 # svg-polygon-decorator
-Decorator for polygons in svg
+This is a component to decorate polygons in svg
+
+See [Demo](https://rumax.github.io/svg-polygon-decorator/demo/ "Demo") for example.
+
+## License
+
+MIT
