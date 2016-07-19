@@ -20,7 +20,8 @@
 //   pointB.y -= yShift;
 //
 //   let k = (pointB.y - pointA.y) / (pointB.x - pointA.x);
-//   let b = pointA.y - pointA.x * (pointB.y - pointA.y) / (pointB.x - pointA.x);
+//   let b = pointA.y - pointA.x * (pointB.y - pointA.y) /
+//     (pointB.x - pointA.x);
 //
 //   const A = 1 + k * k;
 //   const B = 2 * k * b;
@@ -55,28 +56,28 @@ const Y = 1;
 const FLOAT_PRECISE = 0.000001;
 
 
-let lineLength = (line) => {
-  let pointA = line[0];
-  let pointB = line[1];
+const lineLength = (line) => {
+  const pointA = line[0];
+  const pointB = line[1];
 
   return Math.sqrt(Math.pow((pointB[X] - pointA[X]), 2) +
     Math.pow((pointB[Y] - pointA[Y]), 2));
 };
 
 
-let getIntersection = (line, length) => {
+const getIntersection = (line, length) => {
   let pointC = null;
-  let pointA = line[0];
-  let pointB = line[1];
+  const pointA = line[0];
+  const pointB = line[1];
   let delta;
   let xPoint;
   let yPoint;
-  let fullLen = lineLength(line);
+  const fullLen = lineLength(line);
 
   if (Math.abs(fullLen - length) < FLOAT_PRECISE) {
     pointC = pointB;
   } else if (fullLen > length) {
-    delta = length / (fullLen - length)
+    delta = length / (fullLen - length);
     xPoint = (pointA[X] + delta * pointB[X]) / (1 + delta);
     yPoint = (pointA[Y] + delta * pointB[Y]) / (1 + delta);
     pointC = [xPoint, yPoint];
@@ -86,45 +87,43 @@ let getIntersection = (line, length) => {
 };
 
 
-let cloudALine = (line, radius, nextLine) => {
-  let lineLength;
-  let pointA = line[0];
-  let pointB = line[1];
+const cloudALine = (line, radius) => {
   let intersection = getIntersection(line, radius * 2);
-  let cloud = ['M ' + line[0][0] + ', ' + line[0][1]];
+  let remainingLine = line;
+  let arc;
+  const cloud = [`M ${line[0][0]}, ${line[0][1]}`];
 
   while (intersection) {
-    cloud.push(' A ' + radius + ' ' + radius + ' 0 1 1 ' +
-      intersection[0] + ' ' + intersection[1]);
-    line = [intersection, line[1]];
-    intersection = getIntersection(line, radius * 2);
+    arc = ` A ${radius} ${radius} 0 1 1 ${intersection[0]} ${intersection[1]}`;
+    cloud.push(arc);
+    remainingLine = [intersection, remainingLine[1]];
+    intersection = getIntersection(remainingLine, radius * 2);
   }
 
   return cloud.join('');
 };
 
 
-var fixRadiusToFitLine = (line, radius) => {
+const fixRadiusToFitLine = (line, radius) => {
   const length = lineLength(line);
-  let segments = Math.round(length / (2 * radius) + 0.5);
-  const newRadius = length / segments;
+  const segments = Math.round(length / (2 * radius) + 0.5);
 
   return length / segments / 2;
 };
 
 
-let svgCloud = (poligon, radius) => {
-  let cloud = 'M ' + poligon[0][0] + ', ' + poligon[0][1];
+const svgCloud = (poligon, radius) => {
+  let cloud = `M ${poligon[0][0]}, ${poligon[0][1]}`;
   let ind = 1;
   let line;
   const cnt = poligon.length;
 
-  for (; ind < cnt; ++ ind) {
+  for (; ind < cnt; ++ind) {
     line = [poligon[ind - 1], poligon[ind]];
     cloud += cloudALine(line, fixRadiusToFitLine(line, radius));
   }
 
-  //Last line (last point to first point)
+  // Last line (last point to first point)
   line = [poligon[ind - 1], poligon[0]];
   cloud += cloudALine(line, fixRadiusToFitLine(line, radius));
 

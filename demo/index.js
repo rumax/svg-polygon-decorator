@@ -24,16 +24,16 @@ const clouds = [
 
 
 const render = () => {
-  let elem, coords;
+  let elem;
   let cloud;
-  const radius = parseFloat(form['radius'].value);
+  const radius = parseFloat(form.radius.value);
 
   for (let ind = 0, cnt = clouds.length; ind < cnt; ++ind) {
     elem = document.querySelector(clouds[ind].selector);
     cloud = svgCloud(clouds[ind].coords, radius);
     elem.setAttribute('d', cloud);
   }
-}
+};
 
 form.addEventListener('change', render);
 render();
