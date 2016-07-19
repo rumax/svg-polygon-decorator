@@ -1,20 +1,29 @@
 import svgCloud from '../src/decorator';
 
-const cloudEl1 = document.querySelector('#cloud1');
-const cloudEl2 = document.querySelector('#cloud2');
+const form = document.querySelector('.controls');
 
-const radius = 8;
+const render = () => {
+  const cloudEl1 = document.querySelector('#cloud1');
+  const cloudEl2 = document.querySelector('#cloud2');
 
-var coordinates = [
-  [10, 120], [180, 120], [230, 180]
-];
+  let radius = parseFloat(form['radius'].value);
 
-let cloud1 = svgCloud(coordinates, radius);
-cloudEl1.setAttribute('d', cloud1);
+  var coordinates = [
+    [10, 120], [180, 120], [230, 180]
+    //[230, 180], [180, 120], [10, 120]
+  ];
 
-let coordinates2 = [
-  [20, 300], [180, 300],  [200, 330], [190, 360], [140, 420], [70, 380]
-];
+  let cloud1 = svgCloud(coordinates, radius);
+  cloudEl1.setAttribute('d', cloud1);
 
-let cloud2 = svgCloud(coordinates2, radius);
-cloudEl2.setAttribute('d', cloud2);
+  let coordinates2 = [
+    [20, 300], [180, 300],  [200, 330], [190, 360], [140, 420], [70, 380]
+  ];
+
+  let cloud2 = svgCloud(coordinates2, radius);
+  cloudEl2.setAttribute('d', cloud2);
+}
+
+render();
+
+form.addEventListener('change', render);

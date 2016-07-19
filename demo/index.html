@@ -4,8 +4,48 @@
   <title>SVG polygon decorator with arcs</title>
   <link href="https://fonts.googleapis.com/css?family=Roboto:300"
         rel="stylesheet" type="text/css">
+	<style type="text/css">
+		body {
+			margin: 0;
+		}
+
+		svg {
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      z-index: 1;
+    }
+
+		.controls {
+			position: absolute;
+			left: 20px;
+			top: 20px;
+			font-family: 'Roboto', sans-serif;
+			font-size: 2rem;
+			z-index: 2;
+			background-color: #f5f5f5;
+      padding: 1rem;
+		}
+
+		.controls label {
+			display: block;
+		}
+
+		.controls input {
+			width: 4.4rem;
+			font-size: 2rem;
+			border: 1px solid #ddd;
+			margin-right: 0.4rem;
+		}
+	</style>
 </head>
 <body>
+  <form class="controls" onsubmit="return false;">
+    <label>
+			<input type="number" name="radius" value="8"/> Arc radius
+		</label>
+	</form>
+
   <svg width="640" height="480" viewBox="0 0 640 480">
     <path d="M10, 120 L 180, 120 L 230, 180 Z" stroke="red"
           stroke-width="2" fill="skyblue"/>
