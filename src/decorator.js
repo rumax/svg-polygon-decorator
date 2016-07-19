@@ -4,7 +4,7 @@
  *
  * @param  {Polygon} poligon
  *
- * @return {Path}
+ * @return {SVG Path}
  */
 
 // let lineSegmentIntersection = (circle, radius, pointA, pointB) => {
