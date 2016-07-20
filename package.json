@@ -2,7 +2,7 @@
   "name": "svg-polygon-decorator",
   "version": "1.0.3",
   "description": "Svg polygon decorator (cloud)",
-  "main": "src/decorator.js",
+  "main": "lib/index.js",
   "dependencies": {},
   "devDependencies": {
     "babel-cli": "^6.10.1",
