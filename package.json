@@ -1,6 +1,6 @@
 {
   "name": "svg-polygon-decorator",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Svg polygon decorator (cloud)",
   "main": "src/decorator.js",
   "dependencies": {},
@@ -23,7 +23,7 @@
     "build": "browserify -v -t [ babelify --presets [ es2015 ] ] -s svgCloud src/decorator.js -o lib/index.js",
     "prepublish": "npm run build"
   },
-   "repository": {
+  "repository": {
     "type": "git",
     "url": "git+https://github.com:rumax/svg-polygon-decorator.git"
   },
