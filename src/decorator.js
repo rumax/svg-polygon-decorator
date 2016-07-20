@@ -91,12 +91,12 @@ const cloudALine = (line, radius, inward) => {
   let point = getIntersection(line, radius * 2);
   let remainingLine = line;
   let arc;
-  const cloud = [`M${line[0][X]}, ${line[0][Y]}`];
+  const cloud = [`M${line[0][X]},${line[0][Y]}`];
   const sweep = true === inward ? 0 : 1;
   const lArc = true === inward ? 0 : 1;
 
   while (point) {
-    arc = ` A ${radius} ${radius} 0 ${lArc} ${sweep} ${point[X]} ${point[Y]}`;
+    arc = ` A${radius},${radius} 0 ${lArc},${sweep} ${point[X]},${point[Y]}`;
     cloud.push(arc);
     remainingLine = [point, remainingLine[1]];
     point = getIntersection(remainingLine, radius * 2);
@@ -129,13 +129,13 @@ const svgCloud = (polyline, radius, closed, inward) => {
   }
 
   // close to get polygon
-  if (true === closed) {
+  if (true === closed && 1 < cnt) {
     line = [polyline[ind - 1], polyline[0]];
     cloud += ' ' + cloudALine(line, fixRadiusToFitLine(line, radius), inward);
   }
 
   // SVG complains about empty path strings
-  return cloud || 'M0 0';
+  return cloud || 'M0,0';
 };
 
 

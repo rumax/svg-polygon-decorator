@@ -12,16 +12,17 @@
     "browserify": "^13.0.1",
     "eslint": "^3.1.1",
     "serve": "^1.4.0",
-    "tap": "^5.8.0",
+    "tap": "6.2.0",
     "watchify": "^3.7.0"
   },
   "scripts": {
     "watch": "watchify -v -d -t [ babelify --presets [ es2015 ] ] -s svgCloud demo/index.js -o demo/build.js",
     "serve": "serve -p 3002",
-    "lint": "eslint ./src/ && eslint ./demo/index.js",
+    "lint": "eslint ./src/ && eslint ./demo/index.js && eslint ./tests/index.js",
     "prebuild": "npm run lint",
     "build": "browserify -v -t [ babelify --presets [ es2015 ] ] -s svgCloud src/decorator.js -o lib/index.js",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "test": "tap tests/*.js --strict"
   },
   "repository": {
     "type": "git",
