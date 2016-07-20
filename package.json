@@ -1,6 +1,6 @@
 {
   "name": "svg-polygon-decorator",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Svg polygon decorator (cloud)",
   "main": "lib/index.js",
   "dependencies": {},
