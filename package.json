@@ -18,10 +18,22 @@
   "scripts": {
     "watch": "watchify -v -d -t [ babelify --presets [ es2015 ] ] -s svgCloud demo/index.js -o demo/build.js",
     "serve": "serve -p 3002",
-    "lint": "eslint ./src/ && eslint ./demo/index.js"
+    "lint": "eslint ./src/ && eslint ./demo/index.js",
+    "prebuild": "npm run lint",
+    "build": "browserify -v -t [ babelify --presets [ es2015 ] ] -s svgCloud src/decorator.js -o lib/index.js",
+    "prepublish": "npm run build"
   },
+   "repository": {
+    "type": "git",
+    "url": "git+https://github.com:rumax/svg-polygon-decorator.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rumax/svg-polygon-decorator/issues"
+  },
+  "homepage": "https://github.com/rumax/svg-polygon-decorator#readme",
   "keywords": [
     "svg",
+    "decorator",
     "cloud"
   ],
   "author": "Maksym Rusynyk <m.rusynyk@gmail.com>",

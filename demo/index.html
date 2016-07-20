@@ -44,9 +44,24 @@
     <label>
 			<input type="number" name="radius" value="8"/> Arc radius
 		</label>
+    <label>
+			<input type="checkbox" name="closed" CHECKED/> Closed
+		</label>
+    <label>
+			<input type="checkbox" name="inward"/> Inward
+		</label>
 	</form>
 
   <svg width="640" height="480" viewBox="0 0 640 480">
+    <path d="M235, 0 L 235, 480" stroke="grey" stroke-width="2"/>
+
+    <path d="M10, 10 L 230, 10" stroke="red" stroke-width="2"/>
+    <path id="cloud_l1" d=""
+          stroke="green" stroke-width="2" fill="none"/>
+    <path d="M240, 10 L 450, 10" stroke="red" stroke-width="2"/>
+    <path id="cloud_l2" d=""
+          stroke="green" stroke-width="2" fill="none"/>
+
     <path d="M10, 120 L 180, 120 L 230, 180 Z" stroke="red"
           stroke-width="2" fill="skyblue"/>
     <path id="cloud1" d=""
