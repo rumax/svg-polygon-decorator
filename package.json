@@ -25,7 +25,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com:rumax/svg-polygon-decorator.git"
+    "url": "git+https://github.com/rumax/svg-polygon-decorator.git"
   },
   "bugs": {
     "url": "https://github.com/rumax/svg-polygon-decorator/issues"
