@@ -7,50 +7,6 @@
  * @return {SVG Path}
  */
 
-// let lineSegmentIntersection = (circle, radius, pointA, pointB) => {
-//   const xShift = circle.x;
-//   const yShift = circle.y;
-//
-//   //Recet circle to (0,0) coordinate
-//   circle.x = 0;
-//   circle.y = 0;
-//   pointA.x -= xShift;
-//   pointA.y -= yShift;
-//   pointB.x -= xShift;
-//   pointB.y -= yShift;
-//
-//   let k = (pointB.y - pointA.y) / (pointB.x - pointA.x);
-//   let b = pointA.y - pointA.x * (pointB.y - pointA.y) /
-//     (pointB.x - pointA.x);
-//
-//   const A = 1 + k * k;
-//   const B = 2 * k * b;
-//   const C = b * b - radius * radius;
-//   const D = B * B - 4 * A * C;
-//
-//   let x1 = null;
-//   let x2 = null;
-//   let y1 = null;
-//   let y2 = null;
-//
-//   if (0 < D) {
-//     console.log('2 points intersects');
-//     x1 = (-B + Math.sqrt(D)) / (2 * A);
-//     x2 = (-B - Math.sqrt(D)) / (2 * A);
-//
-//     if (pointA.x < x1 && pointB.x > x1) {
-//       return [x1 + xShift, (x1 * k  + b) + yShift];
-//     }
-//   } else if (0 === D) {
-//     console.log('1 point intersect');
-//     x1 = x2 = (-B + Math.sqrt(D)) / (2 * A);
-//   } else {
-//     console.log('0 points intersect');
-//   }
-//
-//   return null !== x2 ? [x2 + xShift, (x2 * k  + b) + yShift] : null;
-// };
-
 const X = 0;
 const Y = 1;
 const FLOAT_PRECISE = 0.000001;
@@ -118,6 +74,7 @@ const svgCloud = (polyline, radius, closed, inward) => {
   let cloud = '';
   let ind = 1;
   let line;
+  const _radius = 0 < radius ? radius : 1;
   const cnt = polyline.length;
 
   for (; ind < cnt; ++ind) {
@@ -125,13 +82,13 @@ const svgCloud = (polyline, radius, closed, inward) => {
       cloud += ' ';
     }
     line = [polyline[ind - 1], polyline[ind]];
-    cloud += cloudALine(line, fixRadiusToFitLine(line, radius), inward);
+    cloud += cloudALine(line, fixRadiusToFitLine(line, _radius), inward);
   }
 
   // close to get polygon
   if (true === closed && 1 < cnt) {
     line = [polyline[ind - 1], polyline[0]];
-    cloud += ' ' + cloudALine(line, fixRadiusToFitLine(line, radius), inward);
+    cloud += ' ' + cloudALine(line, fixRadiusToFitLine(line, _radius), inward);
   }
 
   // SVG complains about empty path strings

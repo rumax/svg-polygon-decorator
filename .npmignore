@@ -1,3 +1,5 @@
 node_modules
 demo
+.sonar
+sonar-project.properties
 
