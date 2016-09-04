@@ -37,10 +37,12 @@ const render = () => {
   const radius = parseFloat(form.radius.value);
   const closed = form.closed.checked;
   const inward = form.inward.checked;
+  const swapping = form.swapping.checked;
 
   for (let ind = 0, cnt = clouds.length; ind < cnt; ++ind) {
     elem = document.querySelector(clouds[ind].selector);
-    cloud = svgCloud(clouds[ind].coords, radius, closed, inward);
+    cloud = svgCloud(clouds[ind].coords, radius, closed, inward,
+      swapping);
     elem.setAttribute('d', cloud);
   }
 };

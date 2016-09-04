@@ -1,4 +1,3 @@
-
 /**
  * Generates svg cloud for polygon
  *
@@ -43,19 +42,23 @@ const getIntersection = (line, length) => {
 };
 
 
-const cloudALine = (line, radius, inward) => {
+const cloudALine = (line, radius, inward, swapping) => {
   let point = getIntersection(line, radius * 2);
   let remainingLine = line;
   let arc;
   const cloud = [`M${line[0][X]},${line[0][Y]}`];
-  const sweep = true === inward ? 0 : 1;
-  const lArc = true === inward ? 0 : 1;
+  let sweep = true === inward ? 0 : 1;
+  let lArc = true === inward ? 0 : 1;
 
   while (point) {
     arc = ` A${radius},${radius} 0 ${lArc},${sweep} ${point[X]},${point[Y]}`;
     cloud.push(arc);
     remainingLine = [point, remainingLine[1]];
     point = getIntersection(remainingLine, radius * 2);
+    if (true === swapping) {
+      sweep ^= 1;
+      lArc ^= 1;
+    }
   }
 
   return cloud.join('');
@@ -70,29 +73,35 @@ const fixRadiusToFitLine = (line, radius) => {
 };
 
 
-const svgCloud = (polyline, radius, closed, inward) => {
-  let cloud = '';
+const svgCloud = (polyline, radius, closed, inward, swapping) => {
+  let cloud = [];
   let ind = 1;
   let line;
-  const _radius = 0 < radius ? radius : 1;
+  const r = 0 < radius ? radius : 1;
   const cnt = polyline.length;
+  let fittedRadius;
 
   for (; ind < cnt; ++ind) {
-    if (0 >= ind) {
-      cloud += ' ';
-    }
     line = [polyline[ind - 1], polyline[ind]];
-    cloud += cloudALine(line, fixRadiusToFitLine(line, _radius), inward);
+    fittedRadius = fixRadiusToFitLine(line, r);
+    if (true === swapping) {
+      fittedRadius /= 2;
+    }
+    cloud.push(cloudALine(line, fittedRadius, inward, swapping));
   }
 
   // close to get polygon
   if (true === closed && 1 < cnt) {
     line = [polyline[ind - 1], polyline[0]];
-    cloud += ' ' + cloudALine(line, fixRadiusToFitLine(line, _radius), inward);
+    fittedRadius = fixRadiusToFitLine(line, r);
+    if (true === swapping) {
+      fittedRadius /= 2;
+    }
+    cloud.push(cloudALine(line, fittedRadius, inward, swapping));
   }
 
   // SVG complains about empty path strings
-  return cloud || 'M0,0';
+  return 0 === cloud.length ? 'M0,0' : cloud.join(' ').trim();
 };
 
 

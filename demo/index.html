@@ -4,53 +4,56 @@
   <title>SVG polygon decorator with arcs</title>
   <link href="https://fonts.googleapis.com/css?family=Roboto:300"
         rel="stylesheet" type="text/css">
-	<style type="text/css">
-		body {
-			margin: 0;
-		}
+  <style type="text/css">
+    body {
+      margin: 0;
+    }
 
-		svg {
+    svg {
       height: 100%;
       width: 100%;
       position: absolute;
       z-index: 1;
     }
 
-		.controls {
-			position: absolute;
-			right: .8rem;
-			top: .8rem;
-			font-family: 'Roboto', sans-serif;
-			font-size: 1.6rem;
-			z-index: 2;
-			background-color: #f5f5f5;
+    .controls {
+      position: absolute;
+      right: .8rem;
+      top: .8rem;
+      font-family: 'Roboto', sans-serif;
+      font-size: 1.6rem;
+      z-index: 2;
+      background-color: #f5f5f5;
       padding: 1rem;
-		}
+    }
 
-		.controls label {
-			display: block;
-		}
+    .controls label {
+      display: block;
+    }
 
-		.controls input {
-			width: 4.4rem;
-			font-size: 1.6rem;
-			border: 1px solid #ddd;
-			margin-right: 0.4rem;
-		}
-	</style>
+    .controls input {
+      width: 4.4rem;
+      font-size: 1.6rem;
+      border: 1px solid #ddd;
+      margin-right: 0.4rem;
+    }
+  </style>
 </head>
 <body>
   <form class="controls" onsubmit="return false;">
     <label>
-			<input type="number" name="radius" value="8"/> Arc radius
-		</label>
+      <input type="number" name="radius" value="8"/> Arc radius
+    </label>
     <label>
-			<input type="checkbox" name="closed" CHECKED/> Closed
-		</label>
+      <input type="checkbox" name="closed" CHECKED/> Closed
+    </label>
     <label>
-			<input type="checkbox" name="inward"/> Inward
-		</label>
-	</form>
+      <input type="checkbox" name="inward"/> Inward
+    </label>
+    <label>
+      <input type="checkbox" name="swapping"/> Swapping
+    </label>
+  </form>
 
   <svg width="640" height="480" viewBox="0 0 640 480">
     <path d="M235, 0 L 235, 480" stroke="grey" stroke-width="2"/>
@@ -72,15 +75,15 @@
     <path id="cloud2" d=""
           stroke="green" stroke-width="2" fill="none"/>
 
-		<path d="M460, 120 L 290, 120 L 240, 180 Z" stroke="red"
+    <path d="M460, 120 L 290, 120 L 240, 180 Z" stroke="red"
           stroke-width="2" fill="none"/>
     <path id="cloud3" d=""
           stroke="green" stroke-width="2" fill="none"/>
 
-		<path d="M450,300 L290,300 L270,330 L280,360 L330,420 L400,380 Z" stroke="red"
+    <path d="M450,300 L290,300 L270,330 L280,360 L330,420 L400,380 Z" stroke="red"
           stroke-width="2" fill="none"/>
 
-		<path id="cloud4" d=""
+    <path id="cloud4" d=""
           stroke="green" stroke-width="2" fill="none"/>
   </svg>
   <script type="text/javascript" src="./build.js"></script>
